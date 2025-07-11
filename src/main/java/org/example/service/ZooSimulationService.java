@@ -23,11 +23,11 @@ public class ZooSimulationService {
     boolean isOpen = false;
 
     public void execute(){
-        System.out.println("=== Welcome to the Zoo Admin Console ===");
-        System.out.println("Please login.");
         boolean isRegistered = true;
 
         while(isRegistered){
+            System.out.println("=== Welcome to the Zoo Admin Console ===");
+            System.out.println("Please login.");
             System.out.println("Enter Username: ");
             user = userScanner.nextLine();
             System.out.println("Enter Password: ");
@@ -42,7 +42,7 @@ public class ZooSimulationService {
                 System.out.printf("Login Successful! Welcome User: %s%n",user);
                 switch(loginVO.getUserType()){
                     case 1:
-                        adminModuleService.mainMenu();
+                        adminModuleService.mainMenu(isOpen);
                         break;
                 }
             } else{
