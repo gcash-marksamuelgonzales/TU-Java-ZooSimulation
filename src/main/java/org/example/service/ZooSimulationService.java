@@ -40,7 +40,11 @@ public class ZooSimulationService {
             // Validate if user is registered
             if(loginRepository.isRegistered(loginVO)){
                 System.out.printf("Login Successful! Welcome User: %s%n",user);
-                adminModuleService.mainMenu();
+                switch(loginVO.getUserType()){
+                    case 1:
+                        adminModuleService.mainMenu();
+                        break;
+                }
             } else{
                 System.out.println("Login Invalid! Username/Password is incorrect..");
             }
