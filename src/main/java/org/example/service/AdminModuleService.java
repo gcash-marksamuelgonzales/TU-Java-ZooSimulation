@@ -37,7 +37,7 @@ public class AdminModuleService {
             Integer adminInput = 0;
 
             while(true){
-                System.out.println("== Admin Menu ==");
+                System.out.println("\n == Admin Menu ==");
                 System.out.println("Choose an option: ");
                 if(optionScaner.hasNextInt()){
                     adminInput = optionScaner.nextInt();
@@ -70,13 +70,13 @@ public class AdminModuleService {
                 case 3: // Open Zoo to Visitors
                     isOpen = zooModuleService.isOpen(1,isOpen);
                     if(isOpen){
-                        System.out.printf("Process Complete. Zoo is now open! [Process Date: %s%n]",currentDate);
+                        System.out.printf("Process Complete. Zoo is now open! [Process Date: %s%n] ",currentDate);
                     }
                     break;
                 case 4: // Close Zoo to Visitors
                     isOpen = zooModuleService.isOpen(0,isOpen);
                     if(isOpen){
-                        System.out.printf("Process Complete. Zoo is now closed! [Process Date: %s%n]",currentDate);
+                        System.out.printf("Process Complete. Zoo is now closed! [Process Date: %s%n] ",currentDate);
                     }
                     break;
                 case 5: // Logout

@@ -21,6 +21,19 @@ public class HandlerModuleService {
     private HandlerRepository handlerRepository;
 
     public void accessHandlerView(ZooSetupVO zooSetupVO){
+        // Temporary List for Pending Animals
+        List<AnimalVO> animalVOs = new ArrayList<>();
+        AnimalVO animalVO = new AnimalVO(1,"Tiger", "Feline", 0);
+        AnimalVO animalVO2 = new AnimalVO(2,"Lion", "Feline", 0);
+        AnimalVO animalVO3 = new AnimalVO(3,"Cat", "Feline", 0);
+        AnimalVO animalVO4 = new AnimalVO(4,"Elephants", "Pachyderm", 0);
+        AnimalVO animalVO5 = new AnimalVO(5,"Rhinoceroses", "Pachyderm", 0);
+        animalVOs.add(animalVO);
+        animalVOs.add(animalVO2);
+        animalVOs.add(animalVO3);
+        animalVOs.add(animalVO4);
+        animalVOs.add(animalVO5);
+
         System.out.println("=== Welcome to Zoo Handler Module ===");
         System.out.println("1. Access My Module");
         System.out.println("2. Exit");
@@ -28,7 +41,7 @@ public class HandlerModuleService {
         Scanner handlerInputScanner = new Scanner(System.in);
         Integer handlerInput = 0;
         while(true){
-            System.out.println("== Handler Menu ==");
+            System.out.println("\n == Handler Menu ==");
             System.out.println("Choose an option: ");
             if(handlerInputScanner.hasNextInt()){
                 handlerInput = handlerInputScanner.nextInt();
@@ -37,7 +50,7 @@ public class HandlerModuleService {
                         case 1:
                             StaffVO staffVO = handlerRepository.validateView(zooSetupVO.getHandlerList());
                             if(staffVO.getAssignedRole() != null){
-                                handlerView(staffVO);
+                                handlerView(staffVO,animalVOs);
                             } else{
                                 System.out.println("User is not registered under Handlers..");
                             }
@@ -58,63 +71,32 @@ public class HandlerModuleService {
         }
     }
 
-    public void handlerView(StaffVO staffVO){
-        System.out.printf("Welcome, Handler %s%n!",staffVO.getStaffName());
-        System.out.println("--- Animal Duty Menu ---");
+    public void handlerView(StaffVO staffVO, List<AnimalVO> animalVOs){
+        System.out.printf("Welcome, Handler %s!%n",staffVO.getStaffName());
 
-        // Retrieve animals per type (staffVO.getAssignedRole())
-        List<AnimalVO> animalVOs = new ArrayList<>();
         if(animalVOs.size() > 0){
-            System.out.println("Animals assigned to you:");
-            for(AnimalVO animalVO : animalVOs){
-                System.out.printf("%s. %s%n",animalVO.getAnimalId(),animalVO.getAnimalName());
-            }
-
-            // Choose Animal
-            while(true){
-                System.out.println("Choose animal number to interact with (0 to exit): ");
-            }
-
+            handlerRepository.pendingAnimals(animalVOs,staffVO);
         } else{
             System.out.println("No animals assigned to you!");
         }
 
-        // Temporary
+//        // If data is available for reference
+//        // Retrieve animals per type (staffVO.getAssignedRole())
 //        List<AnimalVO> animalVOs = new ArrayList<>();
-//        AnimalVO animalVO = new AnimalVO("Cat", "Feline");
-//        AnimalVO animalVO2 = new AnimalVO("Cat2", "Feline");
-//        AnimalVO animalVO3 = new AnimalVO("Pachyderm", "Pachyderm");
-//        animalVOs.add(animalVO);
-//        animalVOs.add(animalVO2);
-//        animalVOs.add(animalVO3);
-//
 //        if(animalVOs.size() > 0){
 //            System.out.println("Animals assigned to you:");
-//            for(AnimalVO animalVO1 : animalVOs){
-//                Integer lineCount = 1;
-//                switch(staffVO.getAssignedPosition()){
-//                    case 1: // Pachyderm
-//                        if(animalVO1.getAnimalType().equals("Pachyderm")){
-//                            System.out.printf("%s. %s%n",lineCount,animalVO1.getAnimalName());
-//                            lineCount++;
-//                        }
-//                        break;
-//                    case 2: // Feline
-//                        if(animalVO1.getAnimalType().equals("Feline")){
-//                            System.out.printf("%s. %s%n",lineCount,animalVO1.getAnimalName());
-//                            lineCount++;
-//                        }
-//                        break;
-//                    case 3: // Bird
-//                        if(animalVO1.getAnimalType().equals("Bird")){
-//                            System.out.printf("%s. %s%n",lineCount,animalVO1.getAnimalName());
-//                            lineCount++;
-//                        }
-//                        break;
-//                }
+//            for(AnimalVO animalVO : animalVOs){
+//                System.out.printf("%s. %s%n",animalVO.getAnimalId(),animalVO.getAnimalName());
 //            }
+//
+//            // Choose Animal
+//            while(true){
+//                System.out.println("Choose animal number to interact with (0 to exit): ");
+//            }
+//
 //        } else{
 //            System.out.println("No animals assigned to you!");
 //        }
+
     }
 }
