@@ -14,6 +14,8 @@ import java.util.Scanner;
 @Service
 public class HandlerModuleService {
 
+    static Scanner scanner = new Scanner(System.in);
+
     @Autowired
     private ZooModuleService zooModuleService;
 
@@ -38,13 +40,12 @@ public class HandlerModuleService {
         System.out.println("1. Access My Module");
         System.out.println("2. Exit");
         System.out.println("===");
-        Scanner handlerInputScanner = new Scanner(System.in);
         Integer handlerInput = 0;
         while(true){
             System.out.println("\n == Handler Menu ==");
             System.out.println("Choose an option: ");
-            if(handlerInputScanner.hasNextInt()){
-                handlerInput = handlerInputScanner.nextInt();
+            if(scanner.hasNextInt()){
+                handlerInput = scanner.nextInt();
                 if(handlerInput >= 1 && handlerInput <= 2){
                     switch(handlerInput){
                         case 1:
@@ -66,7 +67,7 @@ public class HandlerModuleService {
                 }
             } else{
                 System.out.println("Invalid input. Kindly retry..");
-                handlerInputScanner.next();
+                scanner.next();
             }
         }
     }

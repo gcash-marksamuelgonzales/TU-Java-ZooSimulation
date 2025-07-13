@@ -16,8 +16,7 @@ public class ZooSimulationService {
     @Autowired
     private LoginRepository loginRepository;
 
-    Scanner userScanner = new Scanner(System.in);
-    Scanner passScanner = new Scanner(System.in);
+    static Scanner scanner = new Scanner(System.in);
     String user = "";
     String pass = "";
     boolean isOpen = false;
@@ -29,9 +28,9 @@ public class ZooSimulationService {
             System.out.println("=== Welcome to the Zoo Admin Console ===");
             System.out.println("Please login.");
             System.out.println("Enter Username: ");
-            user = userScanner.nextLine();
+            user = scanner.nextLine();
             System.out.println("Enter Password: ");
-            pass = passScanner.nextLine();
+            pass = scanner.nextLine();
 
             LoginVO loginVO = new LoginVO();
             loginVO.setUser(user);

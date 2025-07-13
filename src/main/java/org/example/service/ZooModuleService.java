@@ -13,19 +13,19 @@ import java.util.Scanner;
 @Service
 public class ZooModuleService {
 
+    static Scanner scanner = new Scanner(System.in);
+
     @Autowired
     private ZooSetupRepository zooSetupRepository;
 
     public ZooSetupVO zooSetup(ZooSetupVO zooSetupVO){
         // Manager
-        Scanner managerScanner = new Scanner(System.in);
         System.out.println("Enter Manager Name: ");
-        String managerName = managerScanner.nextLine();
+        String managerName = scanner.nextLine();
 
         // Veterinarian
-        Scanner vetScanner = new Scanner(System.in);
         System.out.println("Enter Veterinarian's Name: ");
-        String vetName = vetScanner.nextLine();
+        String vetName = scanner.nextLine();
 
         // Handler
         List<StaffVO> handlerList = generateStaffList();
@@ -45,23 +45,20 @@ public class ZooModuleService {
         List<StaffVO> handlerList = new ArrayList<>();
 
         // Pachyderm
-        Scanner pachydermScanner = new Scanner(System.in);
         System.out.println("Enter Handler for Pachyderm Enclosure: ");
-        String pachydermStaff = pachydermScanner.nextLine();
+        String pachydermStaff = scanner.nextLine();
         StaffVO pachyStaffVO = new StaffVO(pachydermStaff,2,1);
         handlerList.add(pachyStaffVO);
 
         // Feline
-        Scanner felineScanner = new Scanner(System.in);
         System.out.println("Enter Handler for Feline Enclosure: ");
-        String felineStaff = felineScanner.nextLine();
+        String felineStaff = scanner.nextLine();
         StaffVO felineStaffVO = new StaffVO(felineStaff,2,2);
         handlerList.add(felineStaffVO);
 
         // Bird
-        Scanner birdScanner = new Scanner(System.in);
         System.out.println("Enter Handler for Bird Enclosure: ");
-        String birdStaff = birdScanner.nextLine();
+        String birdStaff = scanner.nextLine();
         StaffVO birdStaffVO = new StaffVO(birdStaff,2,3);
         handlerList.add(birdStaffVO);
 
@@ -72,16 +69,14 @@ public class ZooModuleService {
         List<StaffVO> vendorList = new ArrayList<>();
 
         // Ticket Shop
-        Scanner ticketShopScanner = new Scanner(System.in);
         System.out.println("Enter Vendor for Ticket Shop: ");
-        String ticketShopName = ticketShopScanner.nextLine();
+        String ticketShopName = scanner.nextLine();
         StaffVO ticketShopStaffVO = new StaffVO(ticketShopName, 3, 1);
         vendorList.add(ticketShopStaffVO);
 
         // Shop
-        Scanner shopScanner = new Scanner(System.in);
         System.out.println("Enter Vendor for Shop: ");
-        String shopName = shopScanner.nextLine();
+        String shopName = scanner.nextLine();
         StaffVO shopStaffVO = new StaffVO(shopName,3,2);
         vendorList.add(shopStaffVO);
 

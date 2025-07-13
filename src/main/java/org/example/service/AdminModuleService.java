@@ -15,6 +15,7 @@ public class AdminModuleService {
     LocalDate localDate = LocalDate.now();
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     String currentDate = localDate.format(dtf);
+    static Scanner scanner = new Scanner(System.in);
 
     @Autowired
     private ZooModuleService zooModuleService;
@@ -33,14 +34,13 @@ public class AdminModuleService {
         System.out.println("==========");
         boolean isComplete = true;
         while(isComplete){
-            Scanner optionScaner = new Scanner(System.in);
             Integer adminInput = 0;
 
             while(true){
                 System.out.println("\n == Admin Menu ==");
                 System.out.println("Choose an option: ");
-                if(optionScaner.hasNextInt()){
-                    adminInput = optionScaner.nextInt();
+                if(scanner.hasNextInt()){
+                    adminInput = scanner.nextInt();
                     if(adminInput >= 1 && adminInput <= 6){
                         break;
                     } else{
@@ -48,7 +48,7 @@ public class AdminModuleService {
                     }
                 } else{
                     System.out.println("Invalid input. Kindly retry..");
-                    optionScaner.next();
+                    scanner.next();
                 }
             }
 

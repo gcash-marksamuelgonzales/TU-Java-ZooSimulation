@@ -14,10 +14,11 @@ import java.util.Scanner;
 @Repository
 public class HandlerRepository extends StaffVO {
 
+    static Scanner scanner = new Scanner(System.in);
+
     public StaffVO validateView(List<StaffVO> staffVOs){
         System.out.println("Enter your name (Handler): ");
-        Scanner nameScanner = new Scanner(System.in);
-        String name = nameScanner.nextLine();
+        String name = scanner.nextLine();
 
         StaffVO staffVO = new StaffVO();
         for(StaffVO staff : staffVOs){
@@ -62,9 +63,8 @@ public class HandlerRepository extends StaffVO {
             Optional<AnimalVO> result = Optional.empty();
 
             while(!result.isPresent()){
-                Scanner animalScanner = new Scanner(System.in);
                 System.out.println("\n Choose animal number to interact with (0 to exit): ");
-                Integer selectedAnimal = animalScanner.nextInt();
+                Integer selectedAnimal = scanner.nextInt();
                 result = animalVOs.stream()
                         .filter(animal -> animal.getAnimalId() == selectedAnimal && animal.getAnimalType().equals(animalType) && animal.getAnimalStatus() == 0)
                         .findFirst();
@@ -92,7 +92,6 @@ public class HandlerRepository extends StaffVO {
     }
 
     public Integer selectAction(AnimalVO animalVO){
-        Scanner actionScanner = new Scanner(System.in);
         Integer selectedAction = 0;
         while(true){
             System.out.println("Choose Action:");
@@ -102,8 +101,8 @@ public class HandlerRepository extends StaffVO {
             System.out.println("===");
             System.out.println("\n Choose an option: ");
 
-            if(actionScanner.hasNextInt()){
-                selectedAction = actionScanner.nextInt();
+            if(scanner.hasNextInt()){
+                selectedAction = scanner.nextInt();
                 if(selectedAction>= 1 && selectedAction <= 3){
                     break;
                 } else{
