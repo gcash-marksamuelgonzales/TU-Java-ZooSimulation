@@ -7,6 +7,7 @@ import java.util.List;
 @Data
 public class ZooSetupVO {
     private String managerName;
+    private String veterinarianName;
     private List<StaffVO> handlerList;
     private List<StaffVO> vendorList;
 

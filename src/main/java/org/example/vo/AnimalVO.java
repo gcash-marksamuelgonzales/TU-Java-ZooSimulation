@@ -3,15 +3,17 @@ package org.example.vo;
 import lombok.Data;
 
 @Data
-public class AssignedAnimalVO {
+public class AnimalVO {
+    private Integer animalId;
     private String animalName;
     private String animalType;
 
-    public AssignedAnimalVO(){
+    public AnimalVO(){
 
     }
 
-    public AssignedAnimalVO(String animalName, String animalType){
+    public AnimalVO(Integer animalId, String animalName, String animalType){
+        this.animalId = animalId;
         this.animalName = animalName;
         this.animalType = animalType;
     }

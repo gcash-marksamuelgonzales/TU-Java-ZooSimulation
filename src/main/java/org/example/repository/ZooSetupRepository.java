@@ -11,8 +11,9 @@ import java.util.List;
 @Repository
 public class ZooSetupRepository extends ZooSetupVO {
 
-    public Integer addZooSetup(ZooSetupVO zooSetupVO, String managerName, List<StaffVO> handlerList, List<StaffVO> vendorList){
+    public Integer addZooSetup(ZooSetupVO zooSetupVO, String managerName, String veterinarianName, List<StaffVO> handlerList, List<StaffVO> vendorList){
         zooSetupVO.setManagerName(managerName);
+        zooSetupVO.setVeterinarianName(veterinarianName);
         zooSetupVO.setHandlerList(handlerList);
         zooSetupVO.setVendorList(vendorList);
         return (zooSetupVO.getManagerName() != null) ? 1 : 0;

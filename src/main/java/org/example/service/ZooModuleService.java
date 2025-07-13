@@ -22,13 +22,18 @@ public class ZooModuleService {
         System.out.println("Enter Manager Name: ");
         String managerName = managerScanner.nextLine();
 
+        // Veterinarian
+        Scanner vetScanner = new Scanner(System.in);
+        System.out.println("Enter Veterinarian's Name: ");
+        String vetName = vetScanner.nextLine();
+
         // Handler
         List<StaffVO> handlerList = generateStaffList();
 
         // Shop
         List<StaffVO> vendorList = generateVendorList();
 
-        Integer addZooSetup = zooSetupRepository.addZooSetup(zooSetupVO, managerName, handlerList, vendorList);
+        Integer addZooSetup = zooSetupRepository.addZooSetup(zooSetupVO, managerName, vetName, handlerList, vendorList);
         if(addZooSetup > 0){
             System.out.println("Zoo staff setup complete.");
         }
@@ -38,13 +43,6 @@ public class ZooModuleService {
 
     public List<StaffVO> generateStaffList(){
         List<StaffVO> handlerList = new ArrayList<>();
-
-        // Veterinarian
-        Scanner vetScanner = new Scanner(System.in);
-        System.out.println("Enter Veterinarian's Name: ");
-        String vetName = vetScanner.nextLine();
-        StaffVO vetStaffVO = new StaffVO(vetName,1);
-        handlerList.add(vetStaffVO);
 
         // Pachyderm
         Scanner pachydermScanner = new Scanner(System.in);
