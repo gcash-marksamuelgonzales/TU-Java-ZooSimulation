@@ -26,4 +26,5 @@ public class LoginRepository extends LoginVO {
         }
         return isRegistered;
     }
+
 }

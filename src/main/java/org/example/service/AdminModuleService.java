@@ -60,6 +60,7 @@ public class AdminModuleService {
                         System.out.println("Zoo Setup already configured!");
                     }
                     break;
+
                 case 2: // Access Handler Module
                     if(zooSetupVO.getManagerName() == null || zooSetupVO.getManagerName().equals("")){
                         System.out.println("No assigned roles in Zoo.. Kindly process Zoo Setup first.");
@@ -67,18 +68,29 @@ public class AdminModuleService {
                         handlerModuleService.accessHandlerView(zooSetupVO);
                     }
                     break;
+
                 case 3: // Open Zoo to Visitors
-                    isOpen = zooModuleService.isOpen(1,isOpen);
                     if(isOpen){
-                        System.out.printf("Process Complete. Zoo is now open! [Process Date: %s%n] ",currentDate);
+                        System.out.println("Zoo is already open..");
+                    } else{
+                        isOpen = zooModuleService.isOpen(1,isOpen);
+                        if(isOpen){
+                            System.out.printf("Process Complete. Zoo is now open! [Process Date: %s]%n ",currentDate);
+                        }
                     }
                     break;
+
                 case 4: // Close Zoo to Visitors
-                    isOpen = zooModuleService.isOpen(0,isOpen);
-                    if(isOpen){
-                        System.out.printf("Process Complete. Zoo is now closed! [Process Date: %s%n] ",currentDate);
+                    if(!isOpen){
+                        System.out.println("Zoo is already closed..");
+                    } else{
+                        isOpen = zooModuleService.isOpen(0,isOpen);
+                        if(!isOpen){
+                            System.out.printf("Process Complete. Zoo is now closed! [Process Date: %s]%n",currentDate);
+                        }
                     }
                     break;
+
                 case 5: // Logout
                     while(true){
                         System.out.println("Are you sure you want to logout? [Y/N]");
@@ -97,8 +109,8 @@ public class AdminModuleService {
                             logScanner.next();
                         }
                     }
-
                     break;
+
                 default:
                     System.out.println("Thank you!");
                     System.exit(0);
@@ -106,4 +118,5 @@ public class AdminModuleService {
         }
 
     }
+
 }

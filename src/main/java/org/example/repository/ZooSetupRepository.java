@@ -21,9 +21,9 @@ public class ZooSetupRepository extends ZooSetupVO {
 
     public boolean setZooStatus(Integer status,boolean isOpen){
         if(status == 1){
-            return isOpen;
+            return true;
         } else{
-            return !isOpen;
+            return false;
         }
     }
 }
