@@ -23,19 +23,6 @@ public class HandlerModuleService {
     private HandlerRepository handlerRepository;
 
     public void accessHandlerView(ZooSetupVO zooSetupVO){
-        // Temporary List for Pending Animals
-        List<AnimalVO> animalVOs = new ArrayList<>();
-        AnimalVO animalVO = new AnimalVO(1,"Tiger", "Feline", 0);
-        AnimalVO animalVO2 = new AnimalVO(2,"Lion", "Feline", 0);
-        AnimalVO animalVO3 = new AnimalVO(3,"Cat", "Feline", 0);
-        AnimalVO animalVO4 = new AnimalVO(4,"Elephants", "Pachyderm", 0);
-        AnimalVO animalVO5 = new AnimalVO(5,"Rhinoceroses", "Pachyderm", 0);
-        animalVOs.add(animalVO);
-        animalVOs.add(animalVO2);
-        animalVOs.add(animalVO3);
-        animalVOs.add(animalVO4);
-        animalVOs.add(animalVO5);
-
         System.out.println("=== Welcome to Zoo Handler Module ===");
         System.out.println("1. Access My Module");
         System.out.println("2. Exit");
@@ -51,7 +38,7 @@ public class HandlerModuleService {
                         case 1:
                             StaffVO staffVO = handlerRepository.validateView(zooSetupVO.getHandlerList());
                             if(staffVO.getAssignedRole() != null){
-                                handlerView(staffVO,animalVOs);
+                                handlerView(staffVO);
                             } else{
                                 System.out.println("User is not registered under Handlers..");
                             }
@@ -72,33 +59,22 @@ public class HandlerModuleService {
         }
     }
 
-    public void handlerView(StaffVO staffVO, List<AnimalVO> animalVOs){
-        System.out.printf("Welcome, Handler %s!%n",staffVO.getStaffName());
+    public void handlerView(StaffVO staffVO){
+        String animalType = switch(staffVO.getAssignedPosition()){
+            case 1 -> "Pachyderm";
+            case 2 -> "Feline";
+            case 3 -> "Bird";
+            default -> "none";
+        };
 
+        List<AnimalVO> animalVOs = handlerRepository.retrieveAnimalList(animalType);
+        System.out.printf("Welcome, Handler %s!%n",staffVO.getStaffName());
         if(animalVOs.size() > 0){
-            handlerRepository.pendingAnimals(animalVOs,staffVO);
+            handlerRepository.pendingAnimals(animalType,animalVOs,staffVO);
+            handlerRepository.updateList(animalType,animalVOs);
         } else{
             System.out.println("No animals assigned to you!");
         }
-
-//        // If data is available for reference
-//        // Retrieve animals per type (staffVO.getAssignedRole())
-//        List<AnimalVO> animalVOs = new ArrayList<>();
-//        if(animalVOs.size() > 0){
-//            System.out.println("Animals assigned to you:");
-//            for(AnimalVO animalVO : animalVOs){
-//                System.out.printf("%s. %s%n",animalVO.getAnimalId(),animalVO.getAnimalName());
-//            }
-//
-//            // Choose Animal
-//            while(true){
-//                System.out.println("Choose animal number to interact with (0 to exit): ");
-//            }
-//
-//        } else{
-//            System.out.println("No animals assigned to you!");
-//        }
-
     }
 
 }

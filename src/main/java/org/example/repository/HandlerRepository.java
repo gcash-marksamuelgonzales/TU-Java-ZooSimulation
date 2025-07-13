@@ -2,11 +2,19 @@ package org.example.repository;
 
 import org.example.vo.AnimalVO;
 import org.example.vo.StaffVO;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Repository;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -15,6 +23,8 @@ import java.util.Scanner;
 public class HandlerRepository extends StaffVO {
 
     static Scanner scanner = new Scanner(System.in);
+
+    String filePath = "src/main/java/org/example/resources";
 
     public StaffVO validateView(List<StaffVO> staffVOs){
         System.out.println("Enter your name (Handler): ");
@@ -32,31 +42,43 @@ public class HandlerRepository extends StaffVO {
         return staffVO;
     }
 
-    public AnimalVO assignedAnimal(List<AnimalVO> animalVOs, Integer animalId){
-        for(AnimalVO animalVO : animalVOs){
-            if(animalVO.getAnimalId() == animalId){
-                return animalVO;
+    public List<AnimalVO> retrieveAnimalList(String animalType){
+        List<AnimalVO> animalVOs = new ArrayList<>();
+        try{
+            String fileName = String.format("%s/%s.csv",filePath,animalType);
+            try(BufferedReader read = new BufferedReader(new FileReader(fileName))){
+                String line;
+                while((line = read.readLine()) != null){
+                    String[] values = line.split(",");
+                    AnimalVO animalVO = new AnimalVO();
+                    animalVO.setAnimalName(values[0]);
+                    animalVO.setAnimalType(values[1]);
+                    animalVO.setAnimalSpecies(values[2]);
+                    animalVO.setAnimalStatus(Integer.parseInt(values[3]));
+                    animalVOs.add(animalVO);
+                }
             }
+        } catch (Exception ex){
+            ex.printStackTrace();
         }
-        return null;
+
+        return animalVOs;
     }
 
-    public void pendingAnimals(List<AnimalVO> animalVOs, StaffVO staffVO){
-        String animalType = (staffVO.getAssignedPosition() == 1) ? "Pachyderm" :
-                (staffVO.getAssignedPosition() == 2) ? "Feline" :
-                (staffVO.getAssignedPosition() == 3) ? "Bird" :
-                "";
-
+    public void pendingAnimals(String animalSpecies, List<AnimalVO> animalVOs, StaffVO staffVO){
         long pendingList = animalVOs.stream()
-                .filter(animal -> animal.getAnimalStatus() == 0 && animal.getAnimalType().equals(animalType))
+                .filter(animal -> animal.getAnimalStatus() == 0 && animal.getAnimalSpecies().equals(animalSpecies))
                 .count();
 
         while(pendingList > 0){
+            Integer lineCount = 1;
             System.out.println("--- Animal Duty Menu ---");
             System.out.println("Animals assigned to you:");
             for(AnimalVO animalVO : animalVOs){
-                if(animalVO.getAnimalType().equals(animalType) && animalVO.getAnimalStatus() == 0){
+                animalVO.setAnimalId(lineCount);
+                if(animalVO.getAnimalSpecies().equals(animalSpecies) && animalVO.getAnimalStatus() == 0){
                     System.out.printf("%s. %s%n",animalVO.getAnimalId(),animalVO.getAnimalName());
+                    lineCount++;
                 }
             }
 
@@ -66,7 +88,7 @@ public class HandlerRepository extends StaffVO {
                 System.out.println("\n Choose animal number to interact with (0 to exit): ");
                 Integer selectedAnimal = scanner.nextInt();
                 result = animalVOs.stream()
-                        .filter(animal -> animal.getAnimalId() == selectedAnimal && animal.getAnimalType().equals(animalType) && animal.getAnimalStatus() == 0)
+                        .filter(animal -> animal.getAnimalId() == selectedAnimal && animal.getAnimalSpecies().equals(animalSpecies) && animal.getAnimalStatus() == 0)
                         .findFirst();
 
                 if(result.isPresent()){
@@ -89,6 +111,32 @@ public class HandlerRepository extends StaffVO {
             System.out.println("No assigned animals..");
         }
 
+    }
+
+    public void updateList(String animalType, List<AnimalVO> animalVOs){
+        try{
+            String fileName = String.format("%s/%s.csv",filePath,animalType);
+            File file = new File(fileName);
+            Path path = file.toPath();
+            List<String> newValues = new ArrayList<>();
+
+            for(AnimalVO animalVO : animalVOs){
+                String line = String.join(",",
+                        animalVO.getAnimalName(),
+                        animalVO.getAnimalType(),
+                        animalVO.getAnimalSpecies(),
+                        animalVO.getAnimalStatus().toString());
+                newValues.add(line);
+            }
+
+            if(newValues.size() > 0){
+                Files.newBufferedWriter(path, StandardOpenOption.TRUNCATE_EXISTING).close();
+                Files.write(path, newValues);
+            }
+
+        } catch (IOException ex){
+            ex.printStackTrace();
+        }
     }
 
     public Integer selectAction(AnimalVO animalVO){

@@ -19,6 +19,35 @@ public class ZooModuleService {
     private ZooSetupRepository zooSetupRepository;
 
     public ZooSetupVO zooSetup(ZooSetupVO zooSetupVO){
+        zooSetupVO = zooSetupRepository.retrieveZooSetup();
+        if(zooSetupVO != null){
+            String modify = "";
+            while(true){
+                System.out.println("Retrieved Zoo Setup. Do you want to modify? [Y/N]");
+                if(scanner.hasNextLine()){
+                    modify = scanner.nextLine();
+                    if(modify.equalsIgnoreCase("y") || modify.equalsIgnoreCase("n")){
+                        break;
+                    } else{
+                        System.out.println("Invalid input. Kindly retry..");
+                    }
+                }
+            }
+
+            if(modify.equalsIgnoreCase("y")){
+                zooSetupVO = generateZooSetup();
+            }
+
+        } else{
+
+        }
+
+        return zooSetupVO;
+    }
+
+    public ZooSetupVO generateZooSetup(){
+        ZooSetupVO zooSetupVO = new ZooSetupVO();
+
         // Manager
         System.out.println("Enter Manager Name: ");
         String managerName = scanner.nextLine();
@@ -35,7 +64,7 @@ public class ZooModuleService {
 
         Integer addZooSetup = zooSetupRepository.addZooSetup(zooSetupVO, managerName, vetName, handlerList, vendorList);
         if(addZooSetup > 0){
-            System.out.println("Zoo staff setup complete.");
+            zooSetupRepository.updateZooSetup(zooSetupVO);
         }
 
         return zooSetupVO;

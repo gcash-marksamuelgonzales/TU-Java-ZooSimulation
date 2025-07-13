@@ -6,6 +6,7 @@ import java.util.List;
 
 @Data
 public class ZooSetupVO {
+    private Integer staffId;
     private String managerName;
     private String veterinarianName;
     private List<StaffVO> handlerList;
@@ -15,8 +16,10 @@ public class ZooSetupVO {
 
     }
 
-    public ZooSetupVO(String managerName, List<StaffVO> handlerList, List<StaffVO> vendorList){
+    public ZooSetupVO(Integer staffId, String managerName, String veterinarianName, List<StaffVO> handlerList, List<StaffVO> vendorList){
+        this.staffId = staffId;
         this.managerName = managerName;
+        this.veterinarianName = veterinarianName;
         this.handlerList = handlerList;
         this.vendorList = vendorList;
     }
