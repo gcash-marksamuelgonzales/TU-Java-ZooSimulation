@@ -54,11 +54,7 @@ public class AdminModuleService {
 
             switch (adminInput) {
                 case 1: // Setup Zoo Staff
-                    if(zooSetupVO.getManagerName() == null || zooSetupVO.getManagerName().equals("")){
-                        zooSetupVO = zooModuleService.zooSetup(zooSetupVO);
-                    } else{
-                        System.out.println("Zoo Setup already configured!");
-                    }
+                    zooSetupVO = zooModuleService.zooSetup(zooSetupVO);
                     break;
 
                 case 2: // Access Handler Module
