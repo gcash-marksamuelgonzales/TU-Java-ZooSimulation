@@ -8,6 +8,7 @@ public class AnimalVO {
     private String animalName;
     private String animalType;
     private String animalSpecies;
+    private Integer healthStatus;
     private Integer animalStatus;
     private Integer performedAction;
 

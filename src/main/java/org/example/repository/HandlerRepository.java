@@ -54,7 +54,8 @@ public class HandlerRepository extends StaffVO {
                     animalVO.setAnimalName(values[0]);
                     animalVO.setAnimalType(values[1]);
                     animalVO.setAnimalSpecies(values[2]);
-                    animalVO.setAnimalStatus(Integer.parseInt(values[3]));
+                    animalVO.setHealthStatus(Integer.parseInt(values[3]));
+                    animalVO.setAnimalStatus(Integer.parseInt(values[4]));
                     animalVOs.add(animalVO);
                 }
             }
@@ -125,6 +126,7 @@ public class HandlerRepository extends StaffVO {
                         animalVO.getAnimalName(),
                         animalVO.getAnimalType(),
                         animalVO.getAnimalSpecies(),
+                        animalVO.getHealthStatus().toString(),
                         animalVO.getAnimalStatus().toString(),
                         animalVO.getPerformedAction().toString());
                 newValues.add(line);
