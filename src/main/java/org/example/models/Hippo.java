@@ -2,12 +2,12 @@ package org.example.models;
 
 public class Hippo extends Pachyderm {
 
-    public Hippo(String name, String type, boolean isHealthy) {
-        super(name, "Hippo", isHealthy);
+    public Hippo(String name, String type, boolean isSick) {
+        super(name, "Hippo", isSick);
     }
 
-    public Hippo(String name, boolean isHealthy) {
-        super(name, isHealthy);
+    public Hippo(String name, boolean isSick) {
+        super(name, isSick);
     }
 
     @Override

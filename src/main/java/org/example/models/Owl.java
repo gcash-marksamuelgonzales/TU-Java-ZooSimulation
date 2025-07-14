@@ -1,8 +1,8 @@
 package org.example.models;
 
 public class Owl extends Bird {
-    public Owl(String name, boolean isHealthy) {
-        super(name, isHealthy);
+    public Owl(String name, boolean isSick) {
+        super(name, isSick);
     }
 
     public Owl(String name, String type, boolean isSick) {

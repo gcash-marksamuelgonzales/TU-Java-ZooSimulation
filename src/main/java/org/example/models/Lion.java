@@ -1,8 +1,8 @@
 package org.example.models;
 
 public class Lion extends Feline {
-    public Lion(String name, boolean isHealthy) {
-        super(name, isHealthy);
+    public Lion(String name, boolean isSick) {
+        super(name, isSick);
     }
 
     public Lion(String name, String type, boolean isSick) {

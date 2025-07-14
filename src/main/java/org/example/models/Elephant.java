@@ -2,12 +2,12 @@ package org.example.models;
 
 public class Elephant extends Pachyderm{
 
-    public Elephant(String name, String type, boolean isHealthy) {
-        super(name, "Elephant", isHealthy);
+    public Elephant(String name, String type, boolean isSick) {
+        super(name, "Elephant", isSick);
     }
 
-    public Elephant(String name, boolean isHealthy) {
-        super(name, isHealthy);
+    public Elephant(String name, boolean isSick) {
+        super(name, isSick);
     }
 
     @Override
