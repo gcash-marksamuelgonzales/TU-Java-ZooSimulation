@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.models.*;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -10,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+@Service
 public class ZooVisitorModuleService {
     private static Scanner sc = new Scanner(System.in);
     private static int choice;

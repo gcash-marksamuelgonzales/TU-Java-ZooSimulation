@@ -56,6 +56,8 @@ public class HandlerRepository extends StaffVO {
                     animalVO.setAnimalSpecies(values[2]);
                     animalVO.setHealthStatus(Integer.parseInt(values[3]));
                     animalVO.setAnimalStatus(Integer.parseInt(values[4]));
+                    Integer performedAction = (Integer.parseInt(values[5]) > 0) ? Integer.parseInt(values[5]) : 0;
+                    animalVO.setPerformedAction(performedAction);
                     animalVOs.add(animalVO);
                 }
             }
@@ -86,7 +88,7 @@ public class HandlerRepository extends StaffVO {
             Optional<AnimalVO> result = Optional.empty();
 
             while(!result.isPresent()){
-                System.out.println("\n Choose animal number to interact with (0 to exit): ");
+                System.out.println("\nChoose animal number to interact with (0 to exit): ");
                 Integer selectedAnimal = scanner.nextInt();
                 result = animalVOs.stream()
                         .filter(animal -> animal.getAnimalId() == selectedAnimal && animal.getAnimalSpecies().equals(animalSpecies) && animal.getAnimalStatus() == 0)
@@ -151,7 +153,7 @@ public class HandlerRepository extends StaffVO {
             System.out.printf("2. Exercise %s%n",animalVO.getAnimalName());
             System.out.printf("3. Examine %s to Vet%n",animalVO.getAnimalName());
             System.out.println("===");
-            System.out.println("\n Choose an option: ");
+            System.out.println("\nChoose an option: ");
 
             if(scanner.hasNextInt()){
                 selectedAction = scanner.nextInt();
@@ -184,6 +186,7 @@ public class HandlerRepository extends StaffVO {
                         actionPerformed = String.format("%s successfully provided exercise at %s",animalVO.getAnimalName(),currentDate);
                         break;
                     case 3: // Examine
+                        animal.setHealthStatus(1);
                         actionPerformed = String.format("%s admitted at %s",animalVO.getAnimalName(),currentDate);
                         break;
                 }

@@ -35,7 +35,7 @@ public class ZooModuleService {
             }
 
             if(modify.equalsIgnoreCase("y")){
-                zooSetupVO = generateZooSetup();
+                zooSetupVO = generateZooSetup(zooSetupVO);
             }
 
         } else{
@@ -45,7 +45,7 @@ public class ZooModuleService {
         return zooSetupVO;
     }
 
-    public ZooSetupVO generateZooSetup(){
+    public ZooSetupVO generateZooSetup(ZooSetupVO zooSetup){
         ZooSetupVO zooSetupVO = new ZooSetupVO();
 
         // Manager
@@ -62,7 +62,7 @@ public class ZooModuleService {
         // Shop
         List<StaffVO> vendorList = generateVendorList();
 
-        Integer addZooSetup = zooSetupRepository.addZooSetup(zooSetupVO, managerName, vetName, handlerList, vendorList);
+        Integer addZooSetup = zooSetupRepository.addZooSetup(zooSetupVO, zooSetup, managerName, vetName, handlerList, vendorList);
         if(addZooSetup > 0){
             zooSetupRepository.updateZooSetup(zooSetupVO);
         }

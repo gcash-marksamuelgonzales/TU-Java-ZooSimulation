@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.example.repository.LoginRepository;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 @Service
@@ -14,6 +15,9 @@ public class ZooSimulationService {
     private AdminModuleService adminModuleService;
 
     @Autowired
+    private ZooVisitorModuleService zooVisitorModuleService;
+
+    @Autowired
     private LoginRepository loginRepository;
 
     static Scanner scanner = new Scanner(System.in);
@@ -21,7 +25,7 @@ public class ZooSimulationService {
     String pass = "";
     boolean isOpen = false;
 
-    public void execute(){
+    public void execute() throws IOException {
         boolean isRegistered = true;
 
         while(isRegistered){
@@ -42,6 +46,9 @@ public class ZooSimulationService {
                 switch(loginVO.getUserType()){
                     case 1:
                         adminModuleService.mainMenu(isOpen);
+                        break;
+                    case 2:
+                        zooVisitorModuleService.run();
                         break;
                 }
             } else{

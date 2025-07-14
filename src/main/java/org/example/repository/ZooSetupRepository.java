@@ -33,7 +33,6 @@ public class ZooSetupRepository extends ZooSetupVO {
                 while((line = read.readLine()) != null){
                     String[] values = line.split(",");
                     StaffVO staffVO = new StaffVO();
-                    zooSetupVO.setStaffId(Integer.parseInt(values[0]));
                     switch(values[2]){
                         case "Manager":
                             String managerName = (!values[1].equals(null) && !values[1].equals("")) ? values[1] : "";
@@ -74,7 +73,7 @@ public class ZooSetupRepository extends ZooSetupVO {
         return zooSetupVO;
     }
 
-    public Integer addZooSetup(ZooSetupVO zooSetupVO, String managerName, String veterinarianName, List<StaffVO> handlerList, List<StaffVO> vendorList){
+    public Integer addZooSetup(ZooSetupVO zooSetupVO, ZooSetupVO zooSetup, String managerName, String veterinarianName, List<StaffVO> handlerList, List<StaffVO> vendorList){
         zooSetupVO.setManagerName(managerName);
         zooSetupVO.setVeterinarianName(veterinarianName);
         zooSetupVO.setHandlerList(handlerList);
@@ -84,6 +83,7 @@ public class ZooSetupRepository extends ZooSetupVO {
 
     public void updateZooSetup(ZooSetupVO zooSetupVO){
         try{
+            Integer id = 1;
             String fileName = String.format("%s/staff.csv",filePath);
             File file = new File(fileName);
             Path path = file.toPath();
@@ -94,21 +94,23 @@ public class ZooSetupRepository extends ZooSetupVO {
             // Manager
             if(!zooSetupVO.getManagerName().equals(null) && !zooSetupVO.getManagerName().equals("")){
                 line = String.join(",",
-                        zooSetupVO.getStaffId().toString(),
+                        id.toString(),
                         zooSetupVO.getManagerName(),
                         "Manager",
                         "");
                 newValues.add(line);
+                id++;
             }
 
             // Veterinarian
             if(!zooSetupVO.getVeterinarianName().equals(null) && !zooSetupVO.getVeterinarianName().equals("")){
                 line = String.join(",",
-                        zooSetupVO.getStaffId().toString(),
+                        id.toString(),
                         zooSetupVO.getVeterinarianName(),
                         "Veterinarian",
                         "");
                 newValues.add(line);
+                id++;
             }
 
             // Handler
@@ -120,11 +122,12 @@ public class ZooSetupRepository extends ZooSetupVO {
                     default -> "";
                 };
                 line = String.join(",",
-                        zooSetupVO.getStaffId().toString(),
+                        id.toString(),
                         handler.getStaffName(),
                         "Handler",
                         assignedPosition);
                 newValues.add(line);
+                id++;
             }
 
             // Vendor
@@ -135,16 +138,18 @@ public class ZooSetupRepository extends ZooSetupVO {
                     default -> "";
                 };
                 line = String.join(",",
-                        zooSetupVO.getStaffId().toString(),
+                        id.toString(),
                         vendor.getStaffName(),
                         "Shop",
                         assignedPosition);
                 newValues.add(line);
+                id++;
             }
 
             if(newValues.size() > 0){
                 Files.newBufferedWriter(path, StandardOpenOption.TRUNCATE_EXISTING).close();
                 Files.write(path, newValues);
+                System.out.println("Zoo Setup added/updated successfully!");
             }
 
         } catch (IOException ex){

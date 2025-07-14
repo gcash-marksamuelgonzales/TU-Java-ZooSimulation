@@ -29,7 +29,7 @@ public class HandlerModuleService {
         System.out.println("===");
         Integer handlerInput = 0;
         while(true){
-            System.out.println("\n == Handler Menu ==");
+            System.out.println("\n== Handler Menu ==");
             System.out.println("Choose an option: ");
             if(scanner.hasNextInt()){
                 handlerInput = scanner.nextInt();
