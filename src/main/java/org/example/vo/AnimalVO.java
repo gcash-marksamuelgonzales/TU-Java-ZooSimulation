@@ -9,6 +9,7 @@ public class AnimalVO {
     private String animalType;
     private String animalSpecies;
     private Integer animalStatus;
+    private Integer performedAction;
 
     public AnimalVO(){
 

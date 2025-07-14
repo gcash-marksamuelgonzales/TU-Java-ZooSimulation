@@ -125,7 +125,8 @@ public class HandlerRepository extends StaffVO {
                         animalVO.getAnimalName(),
                         animalVO.getAnimalType(),
                         animalVO.getAnimalSpecies(),
-                        animalVO.getAnimalStatus().toString());
+                        animalVO.getAnimalStatus().toString(),
+                        animalVO.getPerformedAction().toString());
                 newValues.add(line);
             }
 
@@ -135,6 +136,7 @@ public class HandlerRepository extends StaffVO {
             }
 
         } catch (IOException ex){
+            System.out.printf("Error encountered while processing update for Animal List (CSV), with error: %s",ex.toString());
             ex.printStackTrace();
         }
     }
@@ -171,7 +173,7 @@ public class HandlerRepository extends StaffVO {
         String currentDate = localDateTime.format(dtf);
 
         for(AnimalVO animal : animalVOs){
-            if(animal.getAnimalId() == animalVO.getAnimalId()){
+            if(animal.getAnimalId() == animalVO.getAnimalId() && animal.getAnimalName().equals(animalVO.getAnimalName())){
                 switch(selectAction){
                     case 1: // Feed
                         actionPerformed = String.format("%s successfully fed at %s",animalVO.getAnimalName(),currentDate);
@@ -183,6 +185,7 @@ public class HandlerRepository extends StaffVO {
                         actionPerformed = String.format("%s admitted at %s",animalVO.getAnimalName(),currentDate);
                         break;
                 }
+                animal.setPerformedAction(selectAction);
                 animal.setAnimalStatus(1);
             }
         }
